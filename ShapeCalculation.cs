@@ -29,8 +29,11 @@ namespace MathShapeCalculation {
                     finishedChoosingMenuOption = false;
                     PrintMenu(selectedOption);
                     selectedOption = ListenUserInput(selectedOption, ref finishedChoosingMenuOption);
-                    selectedOption = (selectedOption < minMenuItem)? minMenuItem : selectedOption;
-                    selectedOption = (selectedOption > maxMenuItem)? maxMenuItem : selectedOption;
+                    if (selectedOption < minMenuItem) {
+                        selectedOption = minMenuItem;
+                    } else if (selectedOption > maxMenuItem) {
+                        selectedOption = maxMenuItem;
+                    }
                 } while (!finishedChoosingMenuOption);
 
                 /* Select the equivalent action based on user choice */
@@ -127,7 +130,7 @@ namespace MathShapeCalculation {
         /// <param name="selectedOption">selectedOption not null</param>
         /// <param name="taskEnd">true</param>
         /// <returns>the updated select option value or change the task status</returns>
-        private static TaskOption ListenUserInput(TaskOption selectedOption, ref bool taskEnd) {
+        private static TaskOption ListenUserInput(TaskOption selectedOption, ref bool finishSelect) {
             ConsoleKey key = Console.ReadKey().Key;
             switch (key){
                 case ConsoleKey.UpArrow:
@@ -137,7 +140,7 @@ namespace MathShapeCalculation {
                     selectedOption++;
                     break;
                 case ConsoleKey.Enter:
-                    taskEnd = true;
+                    finishSelect = true;
                     break;
                 default:
                     break;
